@@ -4,11 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
 public class CovidClinicVO {
 
-	@Id
-    @GeneratedValue
 	private String clinicIdx;
 	
 	private String megalopolis; //시 도 
