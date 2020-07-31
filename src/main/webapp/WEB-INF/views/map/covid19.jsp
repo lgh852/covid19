@@ -8,7 +8,7 @@
   <head>
     <style>
       .map {
-        height: 900px;
+        height: 100%;
         width: 100%;
       }
       #marker {
@@ -69,6 +69,65 @@
 		border-width: 25px;
 		margin-top: -30px;
 	}
+	#sumLabel{
+		height: 58px;
+		position: absolute;
+		z-index: 10;
+		left: 42%;
+		font-size: initial;
+		top:10px;
+		background-color: #ffff;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+		border-radius: 10px;/* transform:translate(-50%, -50%); */
+    	border: 1px solid rgba(0, 0, 0, 0.2);
+    	display:none;
+	}
+	@media screen and (max-width: 480px)
+	#sumLabel {
+	   width:400px;
+	}
+	
+	@media screen and (max-width: 980px)
+	#sumLabel {
+	   width:400px;
+	   left: 0%;
+	}
+	
+	  @media screen and (max-width: 980px) {
+	    #sumLabel {
+	      width:100%;  } 
+	    #sumLabel p{
+	    margin:5px 15px !important;
+	    }
+	    }
+	  @media screen and (max-width: 480px) {
+	    #sumLabel {
+	      width:100%; 
+	       left: 0%;
+	    } 
+	    #sumLabel p{
+	    margin:5px 20px !important;
+	    } 
+	   }
+	   
+	   @media screen and (max-width: 320px) {
+	    #sumLabel {
+	      width:100%; 
+	       left: 0%;
+	    } 
+	    #sumLabel p{
+	    margin:5px 5px !important;
+	    } 
+	   }
+	   @media screen and (max-width: 380px) {
+	    #sumLabel {
+	      width:100%; 
+	       left: 0%;
+	    } 
+	    #sumLabel p{
+	    margin:5px 15px !important;
+	    } 
+	   }
     </style>
     <title>맵 띄우기</title>
   </head>
@@ -218,7 +277,7 @@
 			var featureLsit = [];
 			var circleStyleArray = circleStyle();
 			
-			var url = '/covid19.do'
+			var url = '/map/covid19'
 			ajaxGetJson(url,function(result){
 				var resultList = result.resultValue;
 	 			for(var i = 0 ; i < resultList.length ; i++){
@@ -260,6 +319,7 @@
 			$("#allPeople").text(comma(sum.defCnt));
 			$("#curePeople").text(comma(sum.isolClearCnt));
 			$("#deadPeople").text(comma(sum.deathCnt));
+			$("#todayDt").text(sum.dt.split(' ')[0]);
 		}
  		function initMap(){
  			map = new ol.Map({
@@ -374,7 +434,8 @@
         
 		function popupPixel(geometry){
 			var pixel = map.getPixelFromCoordinate(geometry);
-			var layoutTopWt = +Number($(".top").css("width").replace('px',''));
+			//var layoutTopWt = +Number($(".top").css("width").replace('px',''));
+			var layoutTopWt = 0;
 			var popLeft = (pixel[0]+layoutTopWt+35)+'px';
 			var popTop = (pixel[1]-60)+'px';
 			return [popLeft,popTop]
@@ -397,54 +458,53 @@
 		
 </script>
 	
-	<div id="sumLabel" style="height: 58px;position: absolute;z-index: 10;left: 50%;font-size: initial;top:10px;background-color: #ffff; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);border-radius: 10px;/* transform:translate(-50%, -50%); */
-    border: 1px solid rgba(0, 0, 0, 0.2);display:none;">
+	<div id="sumLabel" style="">
 		<p style="line-height: 2;float:left;margin:5px 5px;font-family: Arial, Helvetica, sans-serif;user-select: none;font-weight: bold;color: #333;color: #333;">확진자: <span id="allPeople"> </span></p>
 		<p style="line-height: 2;float:left;margin:5px 5px;font-family: Arial, Helvetica, sans-serif;user-select: none;font-weight: bold;color: #333;color:rgb(47,181,105);">완치: <span id="curePeople"> </span></p>
 		<p style="line-height: 2;float:left;margin:5px 5px;font-family: Arial, Helvetica, sans-serif;user-select: none;font-weight: bold;color: #333;color: red;">사망: <span id="deadPeople"> </span></p>
-		<p style="text-align:center;line-height: 0;margin:5px 5px;font-family: Arial, Helvetica, sans-serif;user-select: none;font-weight: bold;color: #333;color: red;">2020-07-27</p>
+		<p style="text-align:center;line-height: 0;margin:5px 5px;font-family: Arial, Helvetica, sans-serif;user-select: none;font-weight: bold;color: #333;color: red;" id="todayDt"></p>
 	</div>
 	<div id="map" class="map"></div>
 	<div id="popup" style="height: 58px;position: absolute;z-index: 1;font-size: initial;background-color: #ffff; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);border-radius: 10px;/* transform:translate(-50%, -50%); */
     border: 1px solid rgba(0, 0, 0, 0.2); width: 185px;height: 130px;"><!-- style="display:none;" -->
 		<div class="title">
-			<p style="margin: 0px"><span id="gubun"></span> 확진자</p></div>
+			<p style="margin: 0px;color: black;"><span id="gubun"></span> <span>확진자</span></p></div>
 		<div class="" style="margin: 0 10px;letter-spacing: -1px;">
-			<p style="font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;">일자 : <span id="dt" style="color:black;font-weight: 900;"></span></p>
-			<p style="font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;">누적 확진 : <span id="defCnt" style="color:black;font-weight: 900;"></span></p>
-			<p style="font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;">사망 : <span id="deathCnt" style="color:black;font-weight: 900;"></span></p>
-			<p style="font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;">격리해제 : <span id="isolClearCnt" style="color:black;font-weight: 900;"></span></p>
-			<p style="font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;">10만명당 감염율 : <span id="lon" style="color:black;font-weight: 900;"></span></p>
+			<p style="text-align: left;font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;"><span style="color:black;">일자 : </span><span id="dt" style="color:black;font-weight: 900;"></span></p>
+			<p style="text-align: left;font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;"><span style="color:black;">누적 확진 : </span><span id="defCnt" style="color:black;font-weight: 900;"></span></p>
+			<p style="text-align: left;font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;"><span style="color:black;">사망 : </span><span id="deathCnt" style="color:black;font-weight: 900;"></span></p>
+			<p style="text-align: left;font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;"><span style="color:black;">격리해제 : </span><span id="isolClearCnt" style="color:black;font-weight: 900;"></span></p>
+			<p style="text-align: left;font-family: '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;line-height: 1.5;margin:0px;font-size: 12px;"><span style="color:black;">10만명당 감염율 : </span><span id="lon" style="color:black;font-weight: 900;"></span></p>
 			<input type="hidden" id="geometry"/>
 		</div>	
 	</div>
-    <div id ="labels" style="position: absolute;">
+    <div id ="labels" style="position: absolute;display: none;">
       <!-- Clickable label for Vienna -->
      	<div id="marker" title="Marker"></div>
       <!-- Popup -->
     </div>
 
-	<div style=" box-shadow: 1px 1px 1px 1px #d0cec7;height: 170px;width: 160px;position: relative;top: -694px;left: 10px;background-color: white;border:1px solid #ddd; z-index: 10">
-		<ul style=" list-style:none;padding: 20px;">
-			<li style="padding:0px;text-align: center;">
-				<div class="ckbx-style-13" style="float: left;margin-top: 9px">
-	                 <input type="checkbox" id="satelliteLayer" value="0" name="LayerBtn" onclick="selectLayer('satelliteLayer')">
-	                 <label for="satelliteLayer"></label>
-	             </div>위성
-	        </li>
-			<li style="padding:0px;text-align: center;">
-				<div class="ckbx-style-13" style="float: left;margin-top: 9px">
-	                <input type="checkbox" id="hybridLayer" value="0" name="LayerBtn" onclick="selectLayer('hybridLayer')">
-	                <label for="hybridLayer" ></label>
-	            </div>도로
-			</li>
-			<li style="padding:0px;text-align: center;">
-				<div class="ckbx-style-13" style="float: left;margin-top: 9px">
-	                <input type="checkbox" id="baseLayer" value="0" name="LayerBtn" checked="checked"  onclick="selectLayer('baseLayer')">
-	                <label for="baseLayer"></label>
-	            </div>배경
-			</li>
-		</ul>
-	</div>
+<!-- 	<div style="box-shadow: 1px 1px 1px 1px #d0cec7;height: 170px;width: 160px;position: relative;top: -694px;left: 10px;background-color: white;border:1px solid #ddd; z-index: 10"> -->
+<!-- 		<ul style=" list-style:none;padding: 20px;"> -->
+<!-- 			<li style="padding:0px;text-align: center;"> -->
+<!-- 				<div class="ckbx-style-13" style="float: left;margin-top: 9px"> -->
+<!-- 	                 <input type="checkbox" id="satelliteLayer" value="0" name="LayerBtn" onclick="selectLayer('satelliteLayer')"> -->
+<!-- 	                 <label for="satelliteLayer"></label> -->
+<!-- 	             </div>위성 -->
+<!-- 	        </li> -->
+<!-- 			<li style="padding:0px;text-align: center;"> -->
+<!-- 				<div class="ckbx-style-13" style="float: left;margin-top: 9px"> -->
+<!-- 	                <input type="checkbox" id="hybridLayer" value="0" name="LayerBtn" onclick="selectLayer('hybridLayer')"> -->
+<!-- 	                <label for="hybridLayer" ></label> -->
+<!-- 	            </div>도로 -->
+<!-- 			</li> -->
+<!-- 			<li style="padding:0px;text-align: center;"> -->
+<!-- 				<div class="ckbx-style-13" style="float: left;margin-top: 9px"> -->
+<!-- 	                <input type="checkbox" id="baseLayer" value="0" name="LayerBtn" checked="checked"  onclick="selectLayer('baseLayer')"> -->
+<!-- 	                <label for="baseLayer"></label> -->
+<!-- 	            </div>배경 -->
+<!-- 			</li> -->
+<!-- 		</ul> -->
+<!-- 	</div> -->
   </body>
 </html>

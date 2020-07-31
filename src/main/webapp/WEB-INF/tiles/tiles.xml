@@ -4,31 +4,27 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-   <!-- main -->
-   <definition name="main-layout" template="/WEB-INF/views/common/layout/layout_main.jsp">
-       <put-attribute name="header" value="/WEB-INF/views/common/layout/header.jsp" />
-       <put-attribute name="left" value="/WEB-INF/views/common/layout/left.jsp" />
+   <!-- main --> 
+   <definition name="main_layout" template="/WEB-INF/views/common/main_layout/layout_main.jsp">
+       <put-attribute name="header" value="/WEB-INF/views/common/main_layout/header.jsp" />
+       <put-attribute name="left" value="/WEB-INF/views/common/main_layout/left.jsp" />
        <put-attribute name="body" value="" />
-       <put-attribute name="footer" value="/WEB-INF/views/common/layout/footer.jsp" />
+       <put-attribute name="footer" value="/WEB-INF/views/common/main_layout/footer.jsp" />
    </definition>
-   
-   <!--   
-   <definition name="main/*/*" extends="main-layout">
+   <!-- main --> 
+   <definition name="map_layout" template="/WEB-INF/views/common/map_layout/layout_map.jsp">
+       <put-attribute name="header" value="/WEB-INF/views/common/map_layout/header.jsp" />
+       <put-attribute name="left" value="/WEB-INF/views/common/main_layout/left.jsp" />
+       <put-attribute name="body" value="" />
+       <put-attribute name="footer" value="/WEB-INF/views/common/map_layout/footer.jsp" />
+   </definition>
+
+   <definition name="*/*" extends="map_layout">
        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
    </definition>
-   <definition name="main/*/*/*" extends="main-layout">
-       <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
-   </definition>
-   <definition name="*/*" extends="main-layout">
-       <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
-   </definition> 
-   -->
    
-   <definition name="*" extends="main-layout">
+   <definition name="*" extends="main_layout">
        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
-   </definition>
-   <definition name="*/*" extends="main-layout">
-       <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
    </definition>
 
 </tiles-definitions>

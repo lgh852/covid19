@@ -19,17 +19,17 @@ import com.gh.covid19.util.JsonUtil;
 public class MapController {
 
 	
-	@RequestMapping("/backGroundMap.do")
+	@RequestMapping("/backGroundMap")
 	public String backGroundMap() {
 		return "map/backGroundMap";
 	}
 	
-	@RequestMapping(value = "/updateMap.do")
+	@RequestMapping(value = "/map/covid19Map")
 	public String updateMap() {
-		return "map/updateMap";
+		return "map/covid19";
 	}
 	
-	@RequestMapping(value="/covid19.do" , method = RequestMethod.GET)
+	@RequestMapping(value="/map/covid19" , method = RequestMethod.GET)
 	@ResponseBody
 	public String covid19() {
 		List< HashMap > resultList;
