@@ -1,5 +1,6 @@
 package com.gh.covid19.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -485,5 +486,32 @@ public class DateUtil {
       }
       return retCal;
     }
-
+    public static String getYesterday() {
+    	String yDate = null;
+    	try {
+    	// 1. 날짜 표시 format
+	    	SimpleDateFormat  formatter = new SimpleDateFormat("yyyy-MM-dd");    
+	    	// 2. 오늘날짜 Data 클래스로 구하기(기준날짜가 오늘이 아니면 생략가능)
+	    	Date today = new Date();
+	    	String date =  formatter.format(today);
+	    	// 4. 기준이 되는 날짜(format에 맞춘)
+	    	Date setDate = formatter.parse(date);
+	    	Calendar cal = new GregorianCalendar(Locale.KOREA);
+	    	cal.setTime(setDate);
+	    	// 7. 하루전으로 날짜 설정
+	    	cal.add(Calendar.DATE, -1);
+	    	// 8. 하루전으로 설정된 날짜를 설정된 format으로 String 타입 변경
+	    	formatter = new SimpleDateFormat("yyyyMMdd");
+	    	yDate = formatter.format(cal.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return yDate;
+    }
+   
+    public static void main(String[] args) throws ParseException {
+    	
+	}
+    
 }

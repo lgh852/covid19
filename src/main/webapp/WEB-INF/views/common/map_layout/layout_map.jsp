@@ -9,7 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <tiles:insertAttribute name="header"/> <!--  /WEB-INF/views/common/layout/header.jsp -->
   </head>
+  
   <body class="is-preload" style="height: 100%">
+	<tiles:insertAttribute name="nav"/>
 	<section id="cta" class="wrapper" style="padding: 0px;height: 100%">
 		<tiles:insertAttribute name="body"/> <!-- body -->
 	</section>

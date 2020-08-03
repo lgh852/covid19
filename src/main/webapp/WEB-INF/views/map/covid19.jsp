@@ -305,7 +305,7 @@
 	 				})
 	 				
 	 			    style.setImage(circleStyleArray[data.localOccCnt < 1 ? 'clean' : 'occur']);
-	 			    style.getImage().setRadius(data.localOccCnt < 1 ? 10 : data.localOccCnt * 3);
+	 			    style.getImage().setRadius(data.localOccCnt < 1 ? 10 : data.localOccCnt * 5);
 	 			    feature.setStyle(style);
 	 			    featureLsit.push(feature);
 	 			    src.addFeature(feature);

@@ -22,6 +22,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.gh.covid19.common.ErrorCode;
+
 public class Covid19 {
 
 	public static HashMap<String , Object >covid19Parsing(String xmlString) {
@@ -48,9 +50,6 @@ public class Covid19 {
         factory.setNamespaceAware(true);
         DocumentBuilder builder;
         Document doc = null;
-		for(int i = 0 ; i < latArray.length ; i++) {
-			
-		}
         InputSource is = new InputSource(new StringReader(xmlString));
         try {
 			builder = factory.newDocumentBuilder();
@@ -63,52 +62,58 @@ public class Covid19 {
 	        	expr = xpath.compile("//items/item");
 	        	nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 	        	HashMap<String,String> parsingMap = new HashMap<String,String>();
-	        	for (int i = 1; i < nodeList.getLength(); i++) {
-	                NodeList child = nodeList.item(i).getChildNodes();
-	                parsingMap = new HashMap<String,String>();
-	                for (int j = 0; j < child.getLength(); j++) {
-	                    Node node = child.item(j);
-	
-	                    switch (node.getNodeName()) {
-						case "localOccCnt": //신규 확진자
-							parsingMap.put("localOccCnt", node.getTextContent());
-							break;
-						case "gubun":
-							parsingMap.put("gubun", node.getTextContent());
-							for(int ii = 0; ii < list.size() ; ii++) {
-								if(node.getTextContent().indexOf(list.get(ii).get("location"))> -1) {
-									parsingMap.put("lat", list.get(ii).get("lat"));
-									parsingMap.put("lon", list.get(ii).get("lon"));
-									parsingMap.put("location", list.get(ii).get("location"));
+	        	if(0 < nodeList.getLength()){
+		        	for (int i = 1; i < nodeList.getLength(); i++) {
+		                NodeList child = nodeList.item(i).getChildNodes();
+		                parsingMap = new HashMap<String,String>();
+		                for (int j = 0; j < child.getLength(); j++) {
+		                    Node node = child.item(j);
+		
+		                    switch (node.getNodeName()) {
+							case "localOccCnt": //신규 확진자
+								parsingMap.put("localOccCnt", node.getTextContent());
+								break;
+							case "gubun":
+								parsingMap.put("gubun", node.getTextContent());
+								for(int ii = 0; ii < list.size() ; ii++) {
+									if(node.getTextContent().indexOf(list.get(ii).get("location"))> -1) {
+										parsingMap.put("lat", list.get(ii).get("lat"));
+										parsingMap.put("lon", list.get(ii).get("lon"));
+										parsingMap.put("location", list.get(ii).get("location"));
+									}
 								}
+								break;
+							case "isolClearCnt": // 완치자
+								parsingMap.put("isolClearCnt", node.getTextContent());
+								break;
+							case "defCnt": //누적 확진자
+								parsingMap.put("defCnt", node.getTextContent());
+								break;
+							case "createDt": //일자 
+								parsingMap.put("dt", node.getTextContent());
+								break;
+							case "deathCnt": // 사망자 
+								parsingMap.put("deathCnt",node.getTextContent());
+								break;
+							case "qurRate":
+								parsingMap.put("qurRate",node.getTextContent());
+								break;
 							}
-							break;
-						case "isolClearCnt": // 완치자
-							parsingMap.put("isolClearCnt", node.getTextContent());
-							break;
-						case "defCnt": //누적 확진자
-							parsingMap.put("defCnt", node.getTextContent());
-							break;
-						case "createDt": //일자 
-							parsingMap.put("dt", node.getTextContent());
-							break;
-						case "deathCnt": // 사망자 
-							parsingMap.put("deathCnt",node.getTextContent());
-							break;
-						case "qurRate":
-							parsingMap.put("qurRate",node.getTextContent());
-							break;
-						}
-	                }
-	                if(i != nodeList.getLength()-1) {
-	                	resultList.add( parsingMap );
-	                }else {
-	                	resultMap.put( "resultSum" , parsingMap );
-	                }
-	            }
-	        	resultMap.put( "resultCode" , "00" );
-	        	resultMap.put( "resultMsg" , "success" );
-	        	resultMap.put( "resultValue", resultList ); 
+		                }
+		                if(i != nodeList.getLength()-1) {
+		                	resultList.add( parsingMap );
+		                }else {
+		                	resultMap.put( "resultSum" , parsingMap );
+		                }
+		            }
+		        	resultMap.put( "resultCode" , "00" );
+		        	resultMap.put( "resultMsg" , "success" );
+		        	resultMap.put( "resultValue", resultList ); 
+	        	}else {
+	        		resultMap.put( "resultCode" , ErrorCode.FAIL_CODE_LIST_NULL );
+		        	resultMap.put( "resultMsg" , "Fail List is Null" );
+		        	resultMap.put( "resultValue", resultList ); 
+	        	}
 	        }else {
 	        	System.out.println("통신에러");
 	        }

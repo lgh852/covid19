@@ -14,9 +14,8 @@
    <!-- main --> 
    <definition name="map_layout" template="/WEB-INF/views/common/map_layout/layout_map.jsp">
        <put-attribute name="header" value="/WEB-INF/views/common/map_layout/header.jsp" />
-       <put-attribute name="left" value="/WEB-INF/views/common/main_layout/left.jsp" />
+       <put-attribute name="nav" value="/WEB-INF/views/common/map_layout/nav.jsp" />
        <put-attribute name="body" value="" />
-       <put-attribute name="footer" value="/WEB-INF/views/common/map_layout/footer.jsp" />
    </definition>
 
    <definition name="*/*" extends="map_layout">

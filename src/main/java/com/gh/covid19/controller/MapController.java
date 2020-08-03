@@ -1,7 +1,9 @@
-package com.gh.covid19.comtroller;
+package com.gh.covid19.controller;
 
 import java.util.HashMap;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gh.covid19.common.ErrorCode;
+import com.gh.covid19.service.MapServiceImpl;
+import com.gh.covid19.service.impl.MapService;
 import com.gh.covid19.util.Covid19;
 import com.gh.covid19.util.DateUtil;
 import com.gh.covid19.util.HttpUtil;
@@ -18,6 +22,8 @@ import com.gh.covid19.util.JsonUtil;
 @Controller
 public class MapController {
 
+	@Resource( name = "mapService" ) 
+	MapServiceImpl mapService;
 	
 	@RequestMapping("/backGroundMap")
 	public String backGroundMap() {
@@ -34,19 +40,8 @@ public class MapController {
 	public String covid19() {
 		List< HashMap > resultList;
 		String resultJson = null;;
-		HashMap< String , String > paramMap = new HashMap<>();
-		paramMap.put( "serviceKey", "a5az5KX1oQuLr4GtktcsFT%2FCToAUj8KuRrZcZflDzVmlPZia2rrXJS82m6fun48BMTp5Lq2XFWWQFovOhbwNAA%3D%3D" );
-		paramMap.put( "targetUrl", "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson" );
-		paramMap.put( "startCreateDt", DateUtil.getThisDay("yyyymmdd") );
-		paramMap.put( "endCreateDt", DateUtil.getThisDay("yyyymmdd") );
 		
-		HashMap< String , Object > resultMap = HttpUtil.httpConnection( paramMap );
-		if( resultMap.get( "resultCode" ).equals( ErrorCode.HTTP_SUCCES_CODE ) ) {
-			resultMap = Covid19.covid19Parsing( ( String )resultMap.get( "resultValue" ) );
- 			if( resultMap.get( "resultCode" ).equals( ErrorCode.SUCCES_CODE ) ) {
- 				 resultJson= JsonUtil.mapToJson(resultMap);
- 			}
-		}
+		resultJson = mapService.getCovid19ToJson();
 
 		return resultJson;
 	}

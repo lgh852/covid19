@@ -15,31 +15,15 @@
 		<link rel="stylesheet" type="text/css" href="/css/checkboxes.min.css" />
 		
 		
-		<script type="text/javascript" src="/js/jquery-2.2.4.js"></script>
-		<script type="text/javascript" src="/js/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/browser.min.js"></script>
-		<script type="text/javascript" src="/js/breakpoints.min.js"></script>
+<!-- 		<script type="text/javascript" src="/js/jquery-2.2.4.js"></script> -->
+<!-- 		<script type="text/javascript" src="/js/jquery.min.js"></script> -->
 		<script type="text/javascript" src="/js/openLayers/ol.js"></script>
 		<script type="text/javascript" src="/js/openLayers/ol-debug.js"></script>
 		<script type="text/javascript" src="/js/common.js"></script>
+		
+		<script type="text/javascript"  src="/js/assets/jquery.min.js"></script>
+		<script type="text/javascript"  src="/js/assets/browser.min.js"></script>
+		<script type="text/javascript"  src="/js/assets/breakpoints.min.js"></script>
 		<script type="text/javascript"  src="/js/assets/util.js"></script>
 		<script type="text/javascript"  src="/js/assets/main.js"></script>
-		
 </head>
-<body>
-	<header id="header">
-		<a class="logo" href="index.html">codingDog</a>
-		<nav>
-			<a href="#menu">Menu</a>
-		</nav>
-	</header>
-
-<!-- Nav -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="elements.html">Elements</a></li>
-			<li><a href="generic.html">Generic</a></li>
-		</ul>
-	</nav>
-</body>
