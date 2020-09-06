@@ -301,11 +301,12 @@
 		 	            	    }),
 		 	               	padding: [0,0,0,0],
 //		 	               	offsetY: 15
-		 	             })
+		 	             }),
+	 				
 	 				})
 	 				
 	 			    style.setImage(circleStyleArray[data.localOccCnt < 1 ? 'clean' : 'occur']);
-	 			    style.getImage().setRadius(data.localOccCnt < 1 ? 10 : data.localOccCnt * 5);
+	 			    style.getImage().setRadius(data.localOccCnt < 1 ? 10 : 20);
 	 			    feature.setStyle(style);
 	 			    featureLsit.push(feature);
 	 			    src.addFeature(feature);
@@ -466,7 +467,7 @@
 	</div>
 	<div id="map" class="map"></div>
 	<div id="popup" style="height: 58px;position: absolute;z-index: 1;font-size: initial;background-color: #ffff; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);border-radius: 10px;/* transform:translate(-50%, -50%); */
-    border: 1px solid rgba(0, 0, 0, 0.2); width: 185px;height: 130px;"><!-- style="display:none;" -->
+    border: 1px solid rgba(0, 0, 0, 0.2); width: 185px;height: 135px;"><!-- style="display:none;" -->
 		<div class="title">
 			<p style="margin: 0px;color: black;"><span id="gubun"></span> <span>확진자</span></p></div>
 		<div class="" style="margin: 0 10px;letter-spacing: -1px;">
